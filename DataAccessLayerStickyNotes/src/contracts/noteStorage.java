@@ -5,5 +5,5 @@ import Exception.DALException;
 
 public interface noteStorage {
 
-    public void postNote(Note nt,int id) throws DALException;
+    public void postNote(Note nt,int personID) throws DALException;
 }

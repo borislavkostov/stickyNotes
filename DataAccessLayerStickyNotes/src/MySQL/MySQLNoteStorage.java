@@ -22,12 +22,12 @@ public class MySQLNoteStorage implements noteStorage {
     }
 
     @Override
-    public void postNote(Note nt, int id) throws DALException {
+    public void postNote(Note note, int personID) throws DALException {
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
             CallableStatement statement = conn.prepareCall("{call postNote(?,?,?,?)}");
-            statement.setString("new_title", nt.getTitle());
-            statement.setString("new_description", nt.getDescription());
-            statement.setInt("new_user_id", id);
+            statement.setString("new_title", note.getTitle());
+            statement.setString("new_description", note.getDescription());
+            statement.setInt("new_user_id", personID);
             statement.registerOutParameter("new_id", Types.INTEGER);
             statement.execute();
             int newNoteID = statement.getInt("new_id");
