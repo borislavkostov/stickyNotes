@@ -5,6 +5,8 @@ import contracts.userStorage;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import user.User;
@@ -22,22 +24,37 @@ public class MySQLUserStorage implements userStorage {
     }
 
     @Override
-    public int newUser(User user) throws DALException {
-        int newUserID = 0;
+    public void newUser(User user) throws DALException {
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
-            CallableStatement statement = conn.prepareCall("{call new_user(?,?,?)}");
+            CallableStatement statement = conn.prepareCall("{call new_user(?,?)}");
             statement.setString("new_username", user.getUsername());
             statement.setString("new_password", user.getPassword());
-            statement.registerOutParameter("new_id", Types.INTEGER);
             statement.execute();
-            newUserID = statement.getInt("new_id");
             statement.close();
             conn.close();
-            return newUserID;
         } catch (SQLException e) {
             new DALException("Problem with posting note", e);
         }
-        return newUserID;
+    }
+
+    @Override
+    public User checkUser(User user) throws DALException {
+        User userC;
+        try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
+            PreparedStatement statement = conn.prepareCall("SELECT * FROM StickyNoteBK.user where username=? AND password=?;");
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getPassword());
+            try (ResultSet rs = statement.executeQuery()) {
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                userC = new User(username, password);
+            } catch (SQLException e) {
+                throw new DALException("Problem witch cheking username", e);
+            }
+        } catch (SQLException e) {
+            throw new DALException("Problem witch cheking username", e);
+        }
+        return userC;
     }
 
 }
