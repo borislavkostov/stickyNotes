@@ -18,9 +18,14 @@ public class trash {
         //System.out.println(note.getTitle());
         //ntStorage.postNote(note, "boriou");
         //System.out.println("HI");
-        User user = new User("boriou","1234");
-        User userc = us.checkUser(user);
-        System.out.println(userc.getUsername());
+        User user = new User("Templars","1234");
+//        User userc = us.checkUser(user);
+//        if(userc.getPassword()!=null){
+//        System.out.println(userc.getUsername());
+//        }else{
+//            System.out.print("No such a user");
+//        }
+           us.newUser(user);
 //        List<Note> notes = ntStorage.getNotes(1);
 //        for (Note note : notes) {
 //        System.out.println(note.getTitle());

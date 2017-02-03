@@ -25,32 +25,33 @@ public class MySQLUserStorage implements userStorage {
 
     @Override
     public void newUser(User user) throws DALException {
+
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
             CallableStatement statement = conn.prepareCall("{call new_user(?,?)}");
             statement.setString("new_username", user.getUsername());
             statement.setString("new_password", user.getPassword());
             statement.execute();
             statement.close();
-            conn.close();
         } catch (SQLException e) {
             new DALException("Problem with posting note", e);
         }
+
     }
 
     @Override
     public User checkUser(User user) throws DALException {
         User userC;
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
-            PreparedStatement statement = conn.prepareCall("SELECT * FROM StickyNoteBK.user where username=? AND password=?;");
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getPassword());
-            try (ResultSet rs = statement.executeQuery()) {
-                String username = rs.getString("username");
-                String password = rs.getString("password");
-                userC = new User(username, password);
-            } catch (SQLException e) {
-                throw new DALException("Problem witch cheking username", e);
-            }
+            CallableStatement statement = conn.prepareCall("{call checkUser(?,?,?,?)}");
+            statement.setString("username_old", user.getUsername());
+            statement.setString("password_old", user.getPassword());
+            statement.registerOutParameter("new_username", Types.VARCHAR);
+            statement.registerOutParameter("new_password", Types.VARCHAR);
+            statement.execute();
+            String username = statement.getString("new_username");
+            String password = statement.getString("new_password");
+            userC = new User(username, password);
+
         } catch (SQLException e) {
             throw new DALException("Problem witch cheking username", e);
         }
