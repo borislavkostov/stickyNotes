@@ -15,12 +15,9 @@
     Class.forName("com.mysql.jdbc.Driver");
     userStorage userStorage = new MySQLUserStorage(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD);
     User user = userStorage.checkUser(user1);
-    System.out.println("USERNAME IS "+user1.getUsername());
-    if (user.getUsername()!=null) {
+    System.out.println("USERNAME IS " + user1.getUsername());
+    if (user.getUsername() != null) {
         Cookie ck = new Cookie("username", user.getUsername());
-        String username = user.getUsername();
-        ck.setComment(username);
-        response.addCookie(ck);
         response.sendRedirect("BkStyNotes.jsp");
     } else {
         //response.sendError(1,"Enter valid username password");

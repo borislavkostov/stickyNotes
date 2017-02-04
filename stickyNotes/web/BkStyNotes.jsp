@@ -12,7 +12,21 @@
         <title></title>
     </head>
     <body>
-        <%Cookie ck[] = request.getCookies();%>
-        <h1>Hello World!<%=ck[0].getComment()%></h1>
+        <%
+            Cookie cookie = null;
+            Cookie[] cookies = null;
+            // Get an array of Cookies associated with this domain
+            cookies = request.getCookies();
+
+            String username = "";
+            for (int i = 0; i < cookies.length; i++) {
+                cookie = cookies[i];
+                cookie = cookies[i];
+                if (cookie.getName().equals("username")) {
+                    username = cookie.getValue();
+                }
+            }
+        %>
+        <h1>Hello World!<%=username%> </h1>
     </body>
 </html>
