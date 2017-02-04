@@ -40,7 +40,7 @@ public class MySQLUserStorage implements userStorage {
 
     @Override
     public User checkUser(User user) throws DALException {
-        User userC;
+        User userC = new User("","");
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
             CallableStatement statement = conn.prepareCall("{call checkUser(?,?,?,?)}");
             statement.setString("username_old", user.getUsername());
