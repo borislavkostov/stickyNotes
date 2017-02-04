@@ -31,13 +31,11 @@ public class trash {
 //        for (Note note : notes) {
 //        System.out.println(note.getTitle());
 //        }
-    User user1 = new User("boriou", "1234");
-    userStorage userStorage = new MySQLUserStorage(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD);
-    User user = userStorage.checkUser(user1);
-    if(user.getUsername()!=null){
-    System.out.print(user.getUsername()+user.getPassword());
-    }else{
-        System.out.println("No such a suser");
-    }
+//   
+        List<Note> notes = ntStorage.getNotes("boriou");
+        System.out.println(notes.get(0).getDescription());
+        for (Note note : notes) {
+            System.out.println(note.getTitle());
+        }
     }
 }

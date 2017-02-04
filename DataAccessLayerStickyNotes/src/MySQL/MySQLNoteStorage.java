@@ -6,6 +6,7 @@ import Exception.DALException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,11 +43,13 @@ public class MySQLNoteStorage implements noteStorage {
     }
 
     @Override
-    public List<Note> getNotes(int personID) throws DALException {
+    public List<Note> getNotes(String username) throws DALException {
         List<Note> notes = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DBMS_CONN_STRING, DBMS_USERNAME, DBMS_PASSWORD)) {
-            try (Statement statement = conn.createStatement();) {
-                try (ResultSet rs = statement.executeQuery("SELECT title,description FROM StickyNoteBK.Note;")) {
+            try (PreparedStatement statement = conn.prepareStatement("SELECT title,description FROM StickyNoteBK.Note WHERE user_id=?;")) {
+                statement.setString(1, username);
+                //statement.execute();
+                try (ResultSet rs = statement.executeQuery()) {
                     while (rs.next()) {
                         String title = rs.getString("title");
                         String description = rs.getString("description");

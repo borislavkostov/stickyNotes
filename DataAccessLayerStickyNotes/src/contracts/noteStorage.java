@@ -8,5 +8,5 @@ public interface noteStorage {
 
     public void postNote(Note nt, String username) throws DALException;
 
-    public List<Note> getNotes(int personID) throws DALException;
+    public List<Note> getNotes(String username) throws DALException;
 }
