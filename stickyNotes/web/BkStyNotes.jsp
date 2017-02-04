@@ -12,6 +12,7 @@
         <title></title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%Cookie ck[] = request.getCookies();%>
+        <h1>Hello World!<%=ck[0].getComment()%></h1>
     </body>
 </html>

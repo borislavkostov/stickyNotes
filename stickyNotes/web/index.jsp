@@ -12,6 +12,9 @@
         <title>Login</title>
     </head>
     <body>
+        <%if(session.getAttribute("usernameError")!=null){%>
+        <p>Enter valid username and password</p>
+    <%}%>
         <form action="UsernameCheck.jsp">
             <input type="text" name="Username" value="" />
             <input type="password" name="password" value="" />
