@@ -17,7 +17,7 @@
     User user = userStorage.checkUser(user1);
     System.out.println("USERNAME IS " + user1.getUsername());
     if (user.getUsername() != null) {
-        Cookie ck = new Cookie("username", user.getUsername());
+        session.setAttribute("username",user.getUsername());
         response.sendRedirect("BkStyNotes.jsp");
     } else {
         //response.sendError(1,"Enter valid username password");
@@ -30,7 +30,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Checking user</title>
     </head>
-    <body>
+    <body >
         <h1>Hello World!</h1>
     </body>
 </html>
