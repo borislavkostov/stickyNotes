@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" href="http://icons.iconarchive.com/icons/umar123/mantra-v2/32/Sticky-Notes-icon.png" />
         <style>body{ font-family:"Comic Sans MS", cursive, sans-serif}
             .page-bg{
                 background:url('http://simpledeveloper.com/wp-content/uploads/2013/06/sticky-note-using-html5-web-storage.jpg');
@@ -64,14 +65,16 @@
             }
             .enterForm{width: auto;margin-right: auto;margin-left: 15px;margin-top: 10px}
             .regForm{width: auto;margin-right: auto;margin-left: 15px;margin-bottom: 5px}
-            .enter{width: 280px;margin: 15% auto;background-color: white;height: 130px;border-radius: 25px; }
+            .enter{width: 280px;margin-left:45%;background-color: white;height: 130px;border-radius: 25px; }
+            .header{margin-left: 45%;margin-top: 10%;color: whitesmoke;}
 
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login</title>
     </head>
     <body background="http://simpledeveloper.com/wp-content/uploads/2013/06/sticky-note-using-html5-web-storage.jpg">
-        <div class="enter">
+       <h1 class="header">BK Sticky Notes</h1>
+        <div class="enter">         
             <form class="enterForm" action="UsernameCheck.jsp">
                 <%if (session.getAttribute("usernameError") != null) {%>
                 <p>Enter valid username and password</p>
