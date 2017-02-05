@@ -106,6 +106,10 @@
         <title></title>
     </head>
     <body>
+        <form action="index.jsp" method="POST">
+            <input type="hidden" name="logout" value="logout" />
+            <input type="submit" value="LogOut" />
+        </form>
         <ul>
             <li>
                 <a href="#">
